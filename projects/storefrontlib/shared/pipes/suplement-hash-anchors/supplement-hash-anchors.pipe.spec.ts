@@ -20,8 +20,8 @@ const mockRenderer2 = {
   createElement: createSpy('createElement').and.callFake((type: string) =>
     document.createElement(type)
   ),
-  setProperty: createSpy('setProperty').and.callFake(
-    (el: HTMLElement, prop: string, val: string) => (el[prop] = val)
+  setAttribute: createSpy('setAttribute').and.callFake(
+    (el: HTMLElement, name: string, value: string) => (el.setAttribute(name, value))
   ),
 };
 
@@ -77,19 +77,19 @@ describe('AnchorPipe', () => {
 
       expect(pipe.transform(mockHtml)).toBe(expectedHtml);
       expect(renderer.createElement).toHaveBeenCalledWith('template');
-      expect(renderer.setProperty).toHaveBeenCalledTimes(3);
+      expect(renderer.setAttribute).toHaveBeenCalledTimes(3);
 
-      expect(renderer.setProperty).toHaveBeenCalledWith(
+      expect(renderer.setAttribute).toHaveBeenCalledWith(
         mockLink1,
         'href',
         `${currentUrlWithoutFragment}#head1`
       );
-      expect(renderer.setProperty).toHaveBeenCalledWith(
+      expect(renderer.setAttribute).toHaveBeenCalledWith(
         mockLink5,
         'href',
         `${currentUrlWithoutFragment}#head5`
       );
-      expect(renderer.setProperty).toHaveBeenCalledWith(
+      expect(renderer.setAttribute).toHaveBeenCalledWith(
         mockLink6,
         'href',
         `${currentUrlWithoutFragment}#`
